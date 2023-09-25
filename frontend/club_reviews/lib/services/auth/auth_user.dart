@@ -7,12 +7,14 @@ class AuthUser {
   final String email;
   final bool isVerified;
   final String name;
+  final bool isAdmin;
 
   const AuthUser({
     required this.id,
     required this.email,
     required this.isVerified,
     required this.name,
+    this.isAdmin = true,
   });
 
   factory AuthUser.fromFirebase(User user) => AuthUser(
