@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "984111753935",
+    "project_id": "hackathon-9f5f7",
+    "storage_bucket": "hackathon-9f5f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984111753935:android:23dda8f0c9de23940165ba",
+        "android_client_info": {
+          "package_name": "com.example.club_reviews"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDYAdnv36Fvk6etoEiECShYUY2cM-P9jg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
