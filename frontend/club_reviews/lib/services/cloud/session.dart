@@ -8,7 +8,7 @@ class Session {
   final String clubId;
   final String name;
   final String description;
-  final DateTime date;
+  final String date;
   final Map<String, dynamic>? tags;
   final int state;
 

@@ -13,9 +13,9 @@ final textTheme = TextTheme(
     fontSize: 45,
   ),
   displaySmall: GoogleFonts.poppins(
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     color: Colors.white,
-    fontSize: 36,
+    fontSize: 28,
   ),
   headlineLarge: GoogleFonts.poppins(
     fontWeight: FontWeight.w600,
@@ -28,12 +28,12 @@ final textTheme = TextTheme(
     fontSize: 28,
   ),
   headlineSmall: GoogleFonts.poppins(
-    fontWeight: FontWeight.w600,
-    color: Colors.white,
+    fontWeight: FontWeight.w500,
+    color: const Color(0xFFDDDDDD),
     fontSize: 24,
   ),
   titleLarge: GoogleFonts.poppins(
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     color: const Color(0xFFDDDDDD),
     fontSize: 22,
   ),
@@ -55,19 +55,19 @@ final textTheme = TextTheme(
     fontSize: 14,
   ),
   labelMedium: GoogleFonts.poppins(
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     color: const Color(0xFFDDDDDD),
     fontSize: 12,
   ),
   labelSmall: GoogleFonts.poppins(
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     color: const Color(0xFFDDDDDD),
     fontSize: 11,
   ),
   bodyLarge: GoogleFonts.poppins(
     fontWeight: FontWeight.w600,
     color: Colors.white,
-    fontSize: 16,
+    fontSize: 14,
   ),
   bodyMedium: GoogleFonts.poppins(
     fontWeight: FontWeight.w600,

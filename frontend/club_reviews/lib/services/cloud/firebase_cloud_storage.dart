@@ -4,7 +4,6 @@ import 'package:club_reviews/services/auth/auth_service.dart';
 import 'package:club_reviews/services/auth/auth_user.dart';
 import 'package:club_reviews/services/cloud/cloud_storage_exceptions.dart';
 import 'package:club_reviews/services/cloud/session.dart';
-import 'package:intl/intl.dart';
 
 class FirebaseCloudStorage {
   late final String clubId;
@@ -12,43 +11,72 @@ class FirebaseCloudStorage {
   final CollectionReference<Map<String, dynamic>> clubs =
       FirebaseFirestore.instance.collection('clubs');
 
+  Future<void> initialize({required AuthUser user}) async {
+    clubId = AuthService.firebase().currentUser!.id;
+    sessionsPath = 'clubs/$clubId/sessions';
+
+    try {
+      await createClub(club: user);
+    } catch (_) {}
+  }
+
   static final _shared = FirebaseCloudStorage._sharedInstance();
   FirebaseCloudStorage._sharedInstance();
   factory FirebaseCloudStorage() => _shared;
 
-  Stream<Iterable<Session>> pastSessions() {
-    return FirebaseFirestore.instance.collection(sessionsPath).snapshots().map(
-          (event) =>
-              event.docs.where((doc) => doc.data()[stateField] == '2').map(
-                    (doc) => Session.fromSnapshot(doc),
-                  ),
-        );
+  Future<void> startReviewing({required Session session}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(sessionsPath)
+          .doc(session.doucmentId)
+          .update({
+        stateField: 1,
+      });
+    } catch (_) {
+      throw CouldNotStartReviewsException();
+    }
   }
 
-  Stream<Iterable<Session>> upcomingSessions() {
+  Future<void> stopReviewing({required Session session}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(sessionsPath)
+          .doc(session.doucmentId)
+          .update({
+        stateField: 2,
+      });
+    } catch (_) {
+      throw CouldNotStopReviewsException();
+    }
+  }
+
+  Stream<Iterable<Session>> allSessions() {
     return FirebaseFirestore.instance.collection(sessionsPath).snapshots().map(
-          (event) =>
-              event.docs.where((doc) => doc.data()[stateField] != '2').map(
-                    (doc) => Session.fromSnapshot(doc),
-                  ),
+          (event) => event.docs.map(
+            (doc) => Session.fromSnapshot(doc),
+          ),
         );
   }
 
   Future<Session> createSession({
     required String name,
     required String description,
-    required DateTime date,
+    required String date,
   }) async {
     try {
       final document =
           await FirebaseFirestore.instance.collection(sessionsPath).add({
-        clubId: clubId,
-        dateField: DateFormat('DD MMMM YY').format(date),
+        clubIdField: clubId,
+        dateField: date,
         nameField: name,
         descriptionField: description,
         tagsField: null,
         stateField: 0,
       });
+
+      if (name.isEmpty || date.isEmpty || description.isEmpty) {
+        throw CouldNotCreateSessionException();
+      }
 
       // dummy
       await document.collection('reviews').add({
@@ -83,14 +111,10 @@ class FirebaseCloudStorage {
 
   Future<void> createClub({required AuthUser club}) async {
     try {
-      clubId = AuthService.firebase().currentUser!.id;
-      sessionsPath = 'clubs/$clubId';
-      await clubs.add({
+      await clubs.doc(clubId).set({
         nameField: club.name,
         isAdminField: club.isAdmin,
       });
-    } catch (_) {
-      throw CouldNotCreateClubException();
-    }
+    } catch (_) {}
   }
 }
