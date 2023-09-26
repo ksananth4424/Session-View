@@ -3,6 +3,7 @@
 import 'package:club_reviews/constants/routes.dart';
 import 'package:club_reviews/services/auth/auth_exceptions.dart';
 import 'package:club_reviews/services/auth/auth_service.dart';
+import 'package:club_reviews/services/cloud/firebase_cloud_storage.dart';
 import 'package:club_reviews/utilities/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -16,11 +17,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final FirebaseCloudStorage _cloudStorage;
 
   @override
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    _cloudStorage = FirebaseCloudStorage();
     super.initState();
   }
 
@@ -43,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final user = AuthService.firebase().currentUser;
       if (user?.isVerified ?? false) {
+        _cloudStorage.createClub(club: user!);
         Navigator.of(context).pushNamedAndRemoveUntil(
           sessionsRoute,
           (_) => false,
@@ -106,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 20,
               ),
               TextField(
+                
                 controller: _password,
                 obscureText: true,
                 autocorrect: false,
