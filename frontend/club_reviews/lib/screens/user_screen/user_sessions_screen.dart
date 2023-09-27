@@ -44,6 +44,7 @@ class _UserSessionsScreenState extends State<UserSessionsScreen> {
                   final session = allSessions.elementAt(index);
                   return SessionWidget(
                     session: session,
+                    navToReview: ({required Session session}) {},
                     press: showGiveReviewPage,
                   );
                 },

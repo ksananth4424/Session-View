@@ -35,6 +35,7 @@ class _UserReviewScreenState extends State<UserReviewScreen> {
       text: text,
       session: widget.session,
     );
+    Navigator.of(context).pop();
   }
 
   @override

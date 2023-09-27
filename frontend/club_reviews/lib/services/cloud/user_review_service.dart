@@ -37,7 +37,7 @@ class UserReviewService {
       );
 
       final uri = Uri.parse(
-          'http://10.42.0.173:8000/submit_form/${session.doucmentId}');
+          'http://10.42.0.173:8000/submit_form/?');
 
       final request = {
         clubIdField: session.clubId,
@@ -53,6 +53,7 @@ class UserReviewService {
 
       devtools.log(response.statusCode.toString());
     } catch (_) {
+      devtools.log(_.toString());
       throw CouldNotGiveReviewException();
     }
   }

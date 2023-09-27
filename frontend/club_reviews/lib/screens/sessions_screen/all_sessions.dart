@@ -66,21 +66,25 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
           case ConnectionState.waiting:
             if (snapshot.hasData) {
               final allSessions = snapshot.data!;
-              return ListView.builder(
-                itemCount: allSessions.length,
-                itemBuilder: (context, index) {
-                  final session = allSessions.elementAt(index);
-                  return SessionWidget(
-                    session: session,
-                    press: getFunc(session),
-                  );
-                },
+              return Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: ListView.builder(
+                  itemCount: allSessions.length,
+                  itemBuilder: (context, index) {
+                    final session = allSessions.elementAt(index);
+                    return SessionWidget(
+                      session: session,
+                      navToReview: showReviews,
+                      press: getFunc(session),
+                    );
+                  },
+                ),
               );
             } else {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           default:
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
         }
       },
     );

@@ -4,6 +4,9 @@ import 'package:club_reviews/services/auth/auth_service.dart';
 import 'package:club_reviews/services/auth/auth_user.dart';
 import 'package:club_reviews/services/cloud/cloud_storage_exceptions.dart';
 import 'package:club_reviews/services/cloud/session.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:developer' as devtools show log;
 
 class FirebaseCloudStorage {
   late String clubId;
@@ -43,7 +46,13 @@ class FirebaseCloudStorage {
           descriptionField: session.description,
           dateField: session.date,
           stateField: 1,
-          tagsField: null,
+          tagsField: {
+            managementField: 0,
+            topicLevelField: 0,
+            beginnerFriendlyField: 0,
+            lengthField: 0,
+            informativeField: 0,
+          },
         },
       );
     } catch (_) {
@@ -64,6 +73,23 @@ class FirebaseCloudStorage {
           .collection('upcoming_sessions')
           .doc(session.doucmentId)
           .delete();
+
+      final uri = Uri.parse(
+        'http://10.42.0.173:8000/stop/?',
+      );
+
+      final request = {
+        clubIdField: session.clubId,
+        'session_id': session.doucmentId,
+      };
+
+      final response = await http.post(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(request),
+      );
+
+      devtools.log(response.statusCode.toString());
     } catch (_) {
       throw CouldNotStopReviewsException();
     }
@@ -89,7 +115,13 @@ class FirebaseCloudStorage {
         dateField: date,
         nameField: name,
         descriptionField: description,
-        tagsField: null,
+        tagsField: {
+          managementField: 0,
+          topicLevelField: 0,
+          beginnerFriendlyField: 0,
+          lengthField: 0,
+          informativeField: 0,
+        },
         stateField: 0,
       });
 
@@ -97,18 +129,19 @@ class FirebaseCloudStorage {
         throw CouldNotCreateSessionException();
       }
 
-      // dummy
-      await document.collection('reviews').add({
-        'rating': 5,
-        'text': 'good one',
-      });
       final sessionSnapshot = await document.get();
       return Session(
         clubId: clubId,
         description: description,
         name: name,
         state: 0,
-        tags: null,
+        tags: const {
+          managementField: 0,
+          topicLevelField: 0,
+          beginnerFriendlyField: 0,
+          lengthField: 0,
+          informativeField: 0,
+        },
         date: date,
         doucmentId: sessionSnapshot.id,
       );

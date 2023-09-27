@@ -9,7 +9,7 @@ class Session {
   final String name;
   final String description;
   final String date;
-  final Map<String, dynamic>? tags;
+  final Map<String, dynamic> tags;
   final int state;
 
   const Session({

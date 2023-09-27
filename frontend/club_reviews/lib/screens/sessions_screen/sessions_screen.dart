@@ -60,7 +60,7 @@ class _SessionsScreenState extends State<SessionsScreen> {
                 ),
               );
             default:
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
           }
         });
   }
