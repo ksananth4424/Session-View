@@ -4,6 +4,8 @@ abstract class AuthProvider {
   Future<void> initialize();
   AuthUser? get currentUser;
 
+  Future<bool> isAdmin();
+
   Future<AuthUser> login({
     required String email,
     required String password,

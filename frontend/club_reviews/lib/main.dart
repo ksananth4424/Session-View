@@ -1,6 +1,7 @@
 import 'package:club_reviews/constants/routes.dart';
 import 'package:club_reviews/screens/login_screen.dart';
 import 'package:club_reviews/screens/register_screen.dart';
+import 'package:club_reviews/screens/user_screen/select_user_admin.dart';
 import 'package:club_reviews/screens/sessions_screen/create_new_session.dart';
 import 'package:club_reviews/screens/sessions_screen/sessions_screen.dart';
 import 'package:club_reviews/screens/verify_email_screen.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         loginRoute: (context) => const LoginScreen(),
         registerRoute: (context) => const RegisterScreen(),
         verifyRoute: (context) => const VerifyEmailScreen(),
-        sessionsRoute: (context) => const SessionsScreeen(),
+        sessionsRoute: (context) => const SessionsScreen(),
         createSession: (context) => const CreateNewSession(),
       },
     );
@@ -54,8 +55,7 @@ class HomePage extends StatelessWidget {
             final user = AuthService.firebase().currentUser;
             if (user != null) {
               if (user.isVerified) {
-                print(user);
-                return const SessionsScreeen();
+                return const SelectUserAdmin();
               } else {
                 return const VerifyEmailScreen();
               }

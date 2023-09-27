@@ -7,14 +7,14 @@ import 'package:club_reviews/services/cloud/firebase_cloud_storage.dart';
 import 'package:flutter/material.dart';
 // import 'dart:developer' as devtools show log;
 
-class SessionsScreeen extends StatefulWidget {
-  const SessionsScreeen({super.key});
+class SessionsScreen extends StatefulWidget {
+  const SessionsScreen({super.key});
 
   @override
-  State<SessionsScreeen> createState() => _SessionsScreeenState();
+  State<SessionsScreen> createState() => _SessionsScreenState();
 }
 
-class _SessionsScreeenState extends State<SessionsScreeen> {
+class _SessionsScreenState extends State<SessionsScreen> {
   final club = AuthService.firebase().currentUser!;
   late final FirebaseCloudStorage _cloudStorage;
 
@@ -27,35 +27,41 @@ class _SessionsScreeenState extends State<SessionsScreeen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _cloudStorage.initialize(user: club),
-      builder: (context, snapshot) => Scaffold(
-        appBar: CustomAppBar(
-          context: context,
-          preferredSize: const Size(0, 70),
-          child: Builder(
-            builder: (context) => IconButton(
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: const Icon(Icons.menu),
-              iconSize: 30,
-              color: const Color.fromARGB(255, 221, 221, 221),
-            ),
-          ),
-        ),
-        backgroundColor: const Color(0xFF28292B),
-        body: const UpcomingSessions(),
-        drawer: CustomDrawer(
-          club: club,
-          context: context,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed(createSession);
-          },
-          child: const Icon(Icons.add),
-        ),
-      ),
-    );
+        future: _cloudStorage.initialize(user: club),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return Scaffold(
+                appBar: CustomAppBar(
+                  context: context,
+                  preferredSize: const Size.fromHeight(70),
+                  child: Builder(
+                    builder: (context) => IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      icon: const Icon(Icons.menu),
+                      iconSize: 30,
+                      color: const Color.fromARGB(255, 221, 221, 221),
+                    ),
+                  ),
+                ),
+                backgroundColor: const Color(0xFF28292B),
+                body: const UpcomingSessions(),
+                drawer: CustomDrawer(
+                  club: club,
+                  context: context,
+                ),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(createSession);
+                  },
+                  child: const Icon(Icons.add),
+                ),
+              );
+            default:
+              return const CircularProgressIndicator();
+          }
+        });
   }
 }

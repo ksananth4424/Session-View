@@ -6,6 +6,9 @@ class AuthService implements AuthProvider {
   @override
   AuthUser? get currentUser => provider.currentUser;
 
+  @override
+  Future<bool> isAdmin() => provider.isAdmin();
+
   final AuthProvider provider;
 
   AuthService({required this.provider});

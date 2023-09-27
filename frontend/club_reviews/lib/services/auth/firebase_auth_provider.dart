@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:club_reviews/constants/cloud_constants.dart';
 import 'package:club_reviews/firebase_options.dart';
 import 'package:club_reviews/services/auth/auth_exceptions.dart';
 import 'package:club_reviews/services/auth/auth_provider.dart';
 import 'package:club_reviews/services/auth/auth_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'dart:developer' as devtools show log;
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -13,6 +16,23 @@ class FirebaseAuthProvider implements AuthProvider {
       return null;
     } else {
       return AuthUser.fromFirebase(user);
+    }
+  }
+
+  @override
+  Future<bool> isAdmin() async {
+    final user = currentUser!;
+    final clubs = FirebaseFirestore.instance.collection('clubs');
+    final query = await clubs
+        .where(nameField, isEqualTo: user.name)
+        .get()
+        .then((value) => value.docs);
+
+    devtools.log(query.isEmpty.toString());
+    if (query.isEmpty) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -33,6 +53,7 @@ class FirebaseAuthProvider implements AuthProvider {
       await firebaseUser!.updateDisplayName(name);
 
       final user = currentUser;
+
       if (user != null) {
         return user;
       } else {
@@ -73,6 +94,7 @@ class FirebaseAuthProvider implements AuthProvider {
       );
 
       final user = currentUser;
+
       if (user != null) {
         return user;
       } else {

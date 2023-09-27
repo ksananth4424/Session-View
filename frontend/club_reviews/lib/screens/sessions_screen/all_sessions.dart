@@ -59,29 +59,30 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _cloudStorage.allSessions(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.active:
-            case ConnectionState.waiting:
-              if (snapshot.hasData) {
-                final allSessions = snapshot.data!;
-                return ListView.builder(
-                  itemCount: allSessions.length,
-                  itemBuilder: (context, index) {
-                    final session = allSessions.elementAt(index);
-                    return SessionWidget(
-                      session: session,
-                      press: getFunc(session),
-                    );
-                  },
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            default:
+      stream: _cloudStorage.allSessions(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.active:
+          case ConnectionState.waiting:
+            if (snapshot.hasData) {
+              final allSessions = snapshot.data!;
+              return ListView.builder(
+                itemCount: allSessions.length,
+                itemBuilder: (context, index) {
+                  final session = allSessions.elementAt(index);
+                  return SessionWidget(
+                    session: session,
+                    press: getFunc(session),
+                  );
+                },
+              );
+            } else {
               return const CircularProgressIndicator();
-          }
-        });
+            }
+          default:
+            return const CircularProgressIndicator();
+        }
+      },
+    );
   }
 }

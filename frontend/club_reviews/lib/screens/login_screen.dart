@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:club_reviews/constants/routes.dart';
+import 'package:club_reviews/main.dart';
 import 'package:club_reviews/services/auth/auth_exceptions.dart';
 import 'package:club_reviews/services/auth/auth_service.dart';
 import 'package:club_reviews/utilities/dialogs/error_dialog.dart';
@@ -44,13 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final user = AuthService.firebase().currentUser;
       if (user?.isVerified ?? false) {
-        // _cloudStorage = FirebaseCloudStorage();
-        // _cloudStorage.sessionsPath = 'clubs/${user!.id}';
-        // _cloudStorage.initialize(user: user);
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          sessionsRoute,
-          (_) => false,
-        );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+            (route) => false);
       } else {
         Navigator.of(context).pushNamed(verifyRoute);
       }

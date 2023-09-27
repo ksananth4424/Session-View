@@ -41,6 +41,7 @@ dependencies:
   firebase_analytics: ^10.4.4
   google_fonts: ^6.1.0
   intl: ^0.18.1
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -6,8 +6,8 @@ import 'package:club_reviews/services/cloud/cloud_storage_exceptions.dart';
 import 'package:club_reviews/services/cloud/session.dart';
 
 class FirebaseCloudStorage {
-  late final String clubId;
-  late final String sessionsPath;
+  late String clubId;
+  late String sessionsPath;
   final CollectionReference<Map<String, dynamic>> clubs =
       FirebaseFirestore.instance.collection('clubs');
 
@@ -32,6 +32,20 @@ class FirebaseCloudStorage {
           .update({
         stateField: 1,
       });
+
+      await FirebaseFirestore.instance
+          .collection('upcoming_sessions')
+          .doc(session.doucmentId)
+          .set(
+        {
+          clubIdField: session.clubId,
+          nameField: session.name,
+          descriptionField: session.description,
+          dateField: session.date,
+          stateField: 1,
+          tagsField: null,
+        },
+      );
     } catch (_) {
       throw CouldNotStartReviewsException();
     }
@@ -45,6 +59,11 @@ class FirebaseCloudStorage {
           .update({
         stateField: 3,
       });
+
+      await FirebaseFirestore.instance
+          .collection('upcoming_sessions')
+          .doc(session.doucmentId)
+          .delete();
     } catch (_) {
       throw CouldNotStopReviewsException();
     }
@@ -113,7 +132,7 @@ class FirebaseCloudStorage {
     try {
       await clubs.doc(clubId).set({
         nameField: club.name,
-        isAdminField: club.isAdmin,
+        isAdminField: true,
       });
     } catch (_) {}
   }
