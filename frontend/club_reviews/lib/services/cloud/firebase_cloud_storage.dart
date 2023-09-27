@@ -75,7 +75,7 @@ class FirebaseCloudStorage {
           .delete();
 
       final uri = Uri.parse(
-        'http://10.42.0.173:8000/stop/?',
+        'http://10.42.0.173:9000/stop',
       );
 
       final request = {

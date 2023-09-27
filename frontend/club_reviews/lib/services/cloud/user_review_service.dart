@@ -37,7 +37,7 @@ class UserReviewService {
       );
 
       final uri = Uri.parse(
-          'http://10.42.0.173:8000/submit_form/?');
+          'http://10.42.0.173:9000/submit_form');
 
       final request = {
         clubIdField: session.clubId,
