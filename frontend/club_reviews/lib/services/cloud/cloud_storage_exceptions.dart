@@ -12,3 +12,4 @@ class CouldNotStartReviewsException implements CloudStorageException {}
 
 class CouldNotStopReviewsException implements CloudStorageException {}
 
+class CouldNotGiveReviewException implements CloudStorageException {}

@@ -13,6 +13,33 @@ class SessionWidget extends StatelessWidget {
     required this.press,
   });
 
+  Widget getIcon() {
+    if (session.state == 0) {
+      return IconButton(
+        icon: const Icon(Icons.arrow_forward),
+        onPressed: () => press(session: session),
+        color: const Color.fromARGB(255, 221, 221, 221),
+      );
+    } else if (session.state == 2) {
+      return IconButton(
+        icon: const Icon(Icons.bar_chart_outlined),
+        onPressed: () => press(session: session),
+        color: const Color.fromARGB(255, 221, 221, 221),
+      );
+    } else if (session.state == 1) {
+      return IconButton(
+        icon: const Icon(Icons.check),
+        onPressed: () => press(session: session),
+        color: const Color.fromARGB(255, 221, 221, 221),
+      );
+    } else {
+      return const Expanded(
+        flex: 1,
+        child: CircularProgressIndicator(),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -58,13 +85,7 @@ class SessionWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(session.state == 0
-                          ? Icons.arrow_forward
-                          : Icons.check),
-                      onPressed: () => press(session: session),
-                      color: const Color.fromARGB(255, 221, 221, 221),
-                    ),
+                    getIcon(),
                   ],
                 ),
               ),

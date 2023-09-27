@@ -7,3 +7,4 @@ const stateField = 'state';
 
 
 const isAdminField = 'isAdmin';
+const textField = 'text';

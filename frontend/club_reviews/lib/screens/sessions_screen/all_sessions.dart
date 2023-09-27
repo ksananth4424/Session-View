@@ -1,7 +1,9 @@
+import 'package:club_reviews/screens/sessions_screen/session_review.dart';
 import 'package:club_reviews/screens/sessions_screen/sessions_widget.dart';
 import 'package:club_reviews/services/cloud/firebase_cloud_storage.dart';
 import 'package:club_reviews/services/cloud/session.dart';
 import 'package:club_reviews/utilities/dialogs/start_reviews_dialog.dart';
+import 'package:club_reviews/utilities/dialogs/stop_review_dialog.dart';
 import 'package:flutter/material.dart';
 
 class UpcomingSessions extends StatefulWidget {
@@ -27,10 +29,31 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
     }
   }
 
-  void stopReviewing({required Session session}) async {}
+  void stopReviewing({required Session session}) async {
+    final shouldStop = await showStopReviewDialog(context);
+    if (shouldStop) {
+      _cloudStorage.stopReviewing(session: session);
+    }
+  }
 
   void showReviews({required Session session}) async {
-    
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SessionReviews(session: session),
+      ),
+    );
+  }
+
+  void Function({required Session session}) getFunc(Session session) {
+    if (session.state == 0) {
+      return startReview;
+    } else if (session.state == 1) {
+      return stopReviewing;
+    } else if (session.state == 2) {
+      return showReviews;
+    } else {
+      return ({required Session session}) {};
+    }
   }
 
   @override
@@ -46,9 +69,10 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
                 return ListView.builder(
                   itemCount: allSessions.length,
                   itemBuilder: (context, index) {
+                    final session = allSessions.elementAt(index);
                     return SessionWidget(
-                      session: allSessions.elementAt(index),
-                      press: startReview,
+                      session: session,
+                      press: getFunc(session),
                     );
                   },
                 );

@@ -43,7 +43,7 @@ class FirebaseCloudStorage {
           .collection(sessionsPath)
           .doc(session.doucmentId)
           .update({
-        stateField: 2,
+        stateField: 3,
       });
     } catch (_) {
       throw CouldNotStopReviewsException();
