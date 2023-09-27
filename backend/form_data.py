@@ -4,7 +4,7 @@ from typing import List
 import firebase_admin
 from firebase_admin import credentials,firestore
 from pydantic import BaseModel
-from . import deploy
+from deploy import predict
 cred = credentials.Certificate('hackathon-9f5f7-firebase-adminsdk-1vfic-eb2298f178.json')
 firebase_admin.initialize_app(cred)
 
@@ -33,7 +33,7 @@ async def submit_form(session:session_data):
         review=db.collection("clubs").document(session.club_id).collection("sessions").document(session.session_id).collection("reviews").document(session.review_id)
         doc=review.get()
         field=doc.to_dict().get("review")
-        tags=deploy.predict(field)
+        tags=predict(field)
         if session.club_id not in clubs:
              clubs[session.club_id]={}
 

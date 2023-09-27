@@ -8,7 +8,7 @@ import tensorflow as tf
 from transformers import BertTokenizer
 from transformers import TFBertModel
 model = TFBertModel.from_pretrained('bert-base-cased')
-sentiment_model = tf.keras.models.load_model('/home/pradyumn/FastApi/trial/routers/sentiment_model.h5')
+sentiment_model = tf.keras.models.load_model('my_model.h5')
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 

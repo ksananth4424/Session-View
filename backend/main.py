@@ -1,10 +1,7 @@
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 import form_data
-
-
 
 app = FastAPI()
 
