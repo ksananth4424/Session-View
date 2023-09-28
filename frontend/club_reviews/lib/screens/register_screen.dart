@@ -95,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 height: 470,
                 child: Center(
-                  child: Text('Reviews',
+                  child: Text('Session View',
                       style: Theme.of(context).textTheme.displaySmall),
                 ),
               ),
