@@ -3,6 +3,7 @@
 import 'package:club_reviews/services/cloud/firebase_cloud_storage.dart';
 import 'package:club_reviews/utilities/custom_appbar.dart';
 import 'package:club_reviews/utilities/custom_text_field.dart';
+import 'package:club_reviews/utilities/dialogs/create_new_sessions_dialog.dart';
 import 'package:club_reviews/utilities/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,10 @@ class _CreateNewSessionState extends State<CreateNewSession> {
     final date = _date.text;
 
     try {
+      final shouldCreateSession = await showCreateSessionDialog(context);
+      if (!shouldCreateSession) {
+        return;
+      }
       await _cloudStorage.createSession(
         name: name,
         description: description,

@@ -38,7 +38,9 @@ class SessionReviews extends StatelessWidget {
             children: [
               Text(
                 session.name,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.headlineSmall?.apply(
+                      color: const Color(0xFF00D0FE),
+                    ),
               ),
               Text(
                 '$clubName • ${session.date}',

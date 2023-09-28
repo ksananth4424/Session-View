@@ -109,6 +109,10 @@ class FirebaseCloudStorage {
     required String date,
   }) async {
     try {
+      if (name.isEmpty || date.isEmpty || description.isEmpty) {
+        throw CouldNotCreateSessionException();
+      }
+
       final document =
           await FirebaseFirestore.instance.collection(sessionsPath).add({
         clubIdField: clubId,
@@ -124,10 +128,6 @@ class FirebaseCloudStorage {
         },
         stateField: 0,
       });
-
-      if (name.isEmpty || date.isEmpty || description.isEmpty) {
-        throw CouldNotCreateSessionException();
-      }
 
       final sessionSnapshot = await document.get();
       return Session(
