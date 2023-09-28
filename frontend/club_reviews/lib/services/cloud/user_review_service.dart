@@ -39,7 +39,8 @@ class UserReviewService {
         },
       );
 
-      final uri = Uri.parse('http://10.42.0.173:9000/submit_form');
+      final uri =
+          Uri.parse('https://2fb5-103-232-241-235.ngrok-free.app/submit_form');
 
       final request = {
         clubIdField: session.clubId,

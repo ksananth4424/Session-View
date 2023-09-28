@@ -7,6 +7,7 @@ import 'package:club_reviews/services/cloud/user_review_exceptions.dart';
 import 'package:club_reviews/services/cloud/user_review_service.dart';
 import 'package:club_reviews/utilities/custom_text_field.dart';
 import 'package:club_reviews/utilities/dialogs/error_dialog.dart';
+import 'package:club_reviews/utilities/dialogs/send_review_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:club_reviews/services/auth/auth_service.dart';
 
@@ -37,6 +38,10 @@ class _UserReviewScreenState extends State<UserReviewScreen> {
 
   Future<void> sendReview() async {
     try {
+      final shouldSend = await showSendReviewDialog(context);
+      if (!shouldSend) {
+        return;
+      }
       final text = _text.text;
       await _reviewService.giveReview(
         text: text,

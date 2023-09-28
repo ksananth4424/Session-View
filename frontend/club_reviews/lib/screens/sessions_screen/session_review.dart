@@ -53,6 +53,11 @@ class SessionReviews extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               buildReviewBar(
+                name: 'Overall Session',
+                field: overallGoodField,
+              ),
+              const SizedBox(height: 40),
+              buildReviewBar(
                 name: 'Management',
                 field: managementField,
               ),
@@ -100,7 +105,10 @@ class SessionReviews extends StatelessWidget {
           backgroundColor: Colors.transparent,
           borderRadius: BorderRadius.circular(5),
           color: const Color(0xFF00D0FE),
-          value: (session.tags[field] == 0 ? 0.0 : session.tags[field]),
+          value:
+              (session.tags[field] == 0 || session.tags[reviewCountField] == 0
+                  ? 0.0
+                  : session.tags[field] / session.tags[reviewCountField]),
         )
       ],
     );

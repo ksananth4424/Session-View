@@ -30,17 +30,17 @@ class _UserSessionsScreenState extends State<UserSessionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: StreamBuilder(
-        stream: _reviewService.sessionsOfAllClubs(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.active:
-            case ConnectionState.waiting:
-              if (snapshot.hasData) {
-                final allSessions = snapshot.data!;
-                return ListView.builder(
+    return StreamBuilder(
+      stream: _reviewService.sessionsOfAllClubs(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.active:
+          case ConnectionState.waiting:
+            if (snapshot.hasData) {
+              final allSessions = snapshot.data!;
+              return Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: ListView.builder(
                   itemCount: allSessions.length,
                   itemBuilder: (context, index) {
                     final session = allSessions.elementAt(index);
@@ -50,15 +50,15 @@ class _UserSessionsScreenState extends State<UserSessionsScreen> {
                       press: showGiveReviewPage,
                     );
                   },
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            default:
+                ),
+              );
+            } else {
               return const CircularProgressIndicator();
-          }
-        },
-      ),
+            }
+          default:
+            return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

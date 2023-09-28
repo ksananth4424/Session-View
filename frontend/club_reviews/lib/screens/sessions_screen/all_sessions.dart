@@ -78,7 +78,8 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
                       press: getFunc(session),
                       onDelete: ({required Session session}) {
                         _cloudStorage.deleteSession(
-                            sessionId: session.doucmentId);
+                          session: session,
+                        );
                       },
                     );
                   },

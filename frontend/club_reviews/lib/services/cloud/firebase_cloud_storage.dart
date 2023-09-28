@@ -51,7 +51,9 @@ class FirebaseCloudStorage {
             topicLevelField: 0,
             beginnerFriendlyField: 0,
             lengthField: 0,
+            overallGoodField: 0,
             informativeField: 0,
+            reviewCountField: 0,
           },
         },
       );
@@ -75,7 +77,7 @@ class FirebaseCloudStorage {
           .delete();
 
       final uri = Uri.parse(
-        'http://10.42.0.173:9000/stop',
+        'https://2fb5-103-232-241-235.ngrok-free.app/stop',
       );
 
       final request = {
@@ -125,6 +127,8 @@ class FirebaseCloudStorage {
           beginnerFriendlyField: 0,
           lengthField: 0,
           informativeField: 0,
+          overallGoodField: 0,
+          reviewCountField: 0,
         },
         stateField: 0,
       });
@@ -140,7 +144,9 @@ class FirebaseCloudStorage {
           topicLevelField: 0,
           beginnerFriendlyField: 0,
           lengthField: 0,
+          overallGoodField: 0,
           informativeField: 0,
+          reviewCountField: 0,
         },
         date: date,
         doucmentId: sessionSnapshot.id,
@@ -150,12 +156,19 @@ class FirebaseCloudStorage {
     }
   }
 
-  Future<void> deleteSession({required String sessionId}) async {
+  Future<void> deleteSession({required Session session}) async {
     try {
       await FirebaseFirestore.instance
           .collection(sessionsPath)
-          .doc(sessionId)
+          .doc(session.doucmentId)
           .delete();
+
+      if (session.state == 1) {
+        await FirebaseFirestore.instance
+            .collection('upcoming_sessions')
+            .doc(session.doucmentId)
+            .delete();
+      }
     } catch (_) {
       throw CouldNotDeleteSessionException();
     }
