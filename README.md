@@ -7,8 +7,7 @@ It is a fully automated application wherein it understands the users reviews and
 
 # Getting Started
 
-Requirements: An Android device to run the apk provided.
-To get the application download the [apk]() and install it.
+Requirements: An Android device to run the link provided during the presentation.
 After which create an user account or sign in if an admin.
 
 # Made Using
