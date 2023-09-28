@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+ion// ignore_for_file: use_build_context_synchronously
 
 import 'package:club_reviews/constants/routes.dart';
 import 'package:club_reviews/main.dart';
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 470,
                   child: Center(
                     child: Text(
-                      'Reviews',
+                      'Session View',
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
