@@ -27,6 +27,25 @@ router=APIRouter()
 form_data_queue = asyncio.Queue()  
 
 db=firestore.client()
+def fixup(tags):
+    tags[4].append(tags[1][1])
+    tags[5].append(tags[2][1])
+    tags[8].append(tags[9][1])
+    # for sublist in tags:
+    #     if sublist[0]=='Bad':del sublist
+    #     elif sublist[0]=='Bad Management':del sublist
+    #     elif sublist[0]=='Good Resources':del sublist
+    #     elif sublist[0]=='Short':del sublist
+    #     elif sublist[0]=='Advanced':sublist.append(0)
+        # elif sublist[0]=='Informative and Knowledgeable':sublist.append(0)
+    han=[sublist for sublist in tags  if(sublist[0]!='Bad' and sublist[0]!='Bad Management' and sublist[0]!='Good Resources' and sublist[0]!='Short')]
+    for sublist in han:
+        if sublist[0]=='Informative and Knowledgeable': sublist.append(0)
+        elif sublist[0]=='Advanced': sublist.append(0)
+        elif sublist[0]=='Beginner Friendly': sublist.append(0)
+        
+    print(han)
+    return han
 
 @router.post("/submit_form")
 async def submit_form(session:session_data):
@@ -43,13 +62,16 @@ async def submit_form(session:session_data):
     
     clubs[session.club_id][session.session_id]['counter'] += 1
 
+    tags=fixup(tags)
     for sublist in tags:
         tag_name = sublist[0]
-        tag_value = sublist[1]
+        tag_value_good= sublist[1]
+        tag_value_bad=sublist[2]
         clubs[session.club_id][session.session_id].setdefault(tag_name, 0)
-        if tag_value>0.2:
-             clubs[session.club_id][session.session_id][sublist[0]]=clubs[session.club_id][session.session_id][sublist[0]]+1
-
+        if tag_value_good>0.2:
+            clubs[session.club_id][session.session_id][sublist[0]]=clubs[session.club_id][session.session_id][sublist[0]]+1
+        if tag_value_bad>0.2:
+            clubs[session.club_id][session.session_id][sublist[0]]=clubs[session.club_id][session.session_id][sublist[0]]-1
     update(clubs[session.club_id][session.session_id],session)
     return clubs[session.club_id][session.session_id]
 
