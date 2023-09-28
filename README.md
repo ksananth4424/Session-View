@@ -1,7 +1,15 @@
 # Hackathon_Milan23
 
+# About
+
 This is an application designed for clubs to obtain the sentiment analysis of the sessions they conduct.
-It is a fully automated application wherein it understands the users reviews and provides a synopsis of the reviews of all the users who have attended the session.
+It is a fully automated application wherein it understands the users reviews and provides a synopsis of the reviews of all the users who have attended the session in various tags which are Overall Good, Informative, Management, Length of Session, Beginner Friendly and Topic Level.
+
+# Getting Started
+
+Requirements: An Android device to run the apk provided.
+To get the application download the [apk]() and install it.
+After which create an user account or sign in if an admin.
 
 # Made Using
 ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
@@ -11,14 +19,17 @@ It is a fully automated application wherein it understands the users reviews and
 
 # Contibuters
 
-[Ashwin Agrawal](https://github.com/ashwinagrl)
+[Nimai Parsa](https://github.com/nimaiParsa)
+
+[Pradyumn Kangule](https://github.com/Pradyumn1618)
 
 [K S Ananth](https://github.com/ksananth4424)
 
 [Kartikeya M](https://github.com/MKartikeya)
 
-[Nimai Parsa](https://github.com/nimaiParsa)
-
-[Pradyumn Kangule](https://github.com/Pradyumn1618)
+[Ashwin Agrawal](https://github.com/ashwinagrl)
 
 [Shreyas Premkhede](https://github.com/ShreyasPremkhede)
+
+
+Happy Coding :)
