@@ -1,4 +1,4 @@
-import 'package:club_reviews/screens/sessions_screen/session_review.dart';
+import 'package:club_reviews/screens/sessions_screen/session_review/session_review.dart';
 import 'package:club_reviews/screens/sessions_screen/sessions_widget.dart';
 import 'package:club_reviews/services/cloud/firebase_cloud_storage.dart';
 import 'package:club_reviews/services/cloud/session.dart';

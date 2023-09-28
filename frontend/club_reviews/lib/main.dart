@@ -8,6 +8,7 @@ import 'package:club_reviews/screens/verify_email_screen.dart';
 import 'package:club_reviews/services/auth/auth_service.dart';
 import 'package:club_reviews/utilities/theme_data.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,24 +21,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: textTheme,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 0, 140, 255),
+    return GlobalLoaderOverlay(
+      child: MaterialApp(
+        title: 'Reviews',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          textTheme: textTheme,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 0, 140, 255),
+          ),
+          useMaterial3: true,
         ),
-        useMaterial3: true,
+        home: const HomePage(),
+        routes: {
+          loginRoute: (context) => const LoginScreen(),
+          registerRoute: (context) => const RegisterScreen(),
+          verifyRoute: (context) => const VerifyEmailScreen(),
+          sessionsRoute: (context) => const SessionsScreen(),
+          createSession: (context) => const CreateNewSession(),
+        },
       ),
-      home: const HomePage(),
-      routes: {
-        loginRoute: (context) => const LoginScreen(),
-        registerRoute: (context) => const RegisterScreen(),
-        verifyRoute: (context) => const VerifyEmailScreen(),
-        sessionsRoute: (context) => const SessionsScreen(),
-        createSession: (context) => const CreateNewSession(),
-      },
     );
   }
 }
@@ -63,7 +66,7 @@ class HomePage extends StatelessWidget {
               return const LoginScreen();
             }
           default:
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
         }
       },
     );

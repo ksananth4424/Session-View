@@ -40,6 +40,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final password = _password.text;
 
     try {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
       await AuthService.firebase().createUser(
         email: email,
         password: password,
@@ -47,23 +53,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       await AuthService.firebase().sendEmailVerification();
+      Navigator.of(context).pop();
       Navigator.of(context).pushNamed(verifyRoute);
     } on WeakPasswordException catch (_) {
+      Navigator.of(context).pop();
       showErrorDialog(
         context: context,
         error: 'Weak Password',
       );
     } on InvalidEmailException catch (_) {
+      Navigator.of(context).pop();
       showErrorDialog(
         context: context,
         error: 'Invalid Email',
       );
     } on EmailAlreadyInUseException catch (_) {
+      Navigator.of(context).pop();
       showErrorDialog(
         context: context,
         error: 'Email Already in use',
       );
     } on GenericAuthException catch (_) {
+      Navigator.of(context).pop();
       showErrorDialog(
         context: context,
         error: 'Authentication Error',
@@ -82,12 +93,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: 500,
+                height: 470,
                 child: Center(
                   child: Text('Reviews',
                       style: Theme.of(context).textTheme.displaySmall),
                 ),
               ),
+              Text(
+                'Create a New Account!',
+                style: Theme.of(context).textTheme.titleMedium?.apply(
+                      color: const Color(0xFFDDDDDD),
+                    ),
+              ),
+              const SizedBox(height: 20),
               TextField(
                 controller: _name,
                 enableSuggestions: false,
@@ -150,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               OutlinedButton.icon(
                 icon: const Icon(
                   Icons.email_outlined,
-                  color: Color(0xFFDDDDDD),
+                  color: Color.fromARGB(255, 255, 148, 112),
                 ),
                 label: Text(
                   'Register with email address',
@@ -168,9 +186,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     (_) => false,
                   );
                 },
-                child: Text(
-                  'Already have an account? Login here!',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: 'Already have an account? ',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    TextSpan(
+                      text: 'Login here!',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.apply(color: const Color(0xFF00D0FE)),
+                    ),
+                  ]),
                 ),
               ),
             ],

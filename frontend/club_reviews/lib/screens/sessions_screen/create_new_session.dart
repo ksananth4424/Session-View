@@ -39,13 +39,23 @@ class _CreateNewSessionState extends State<CreateNewSession> {
       if (!shouldCreateSession) {
         return;
       }
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+
       await _cloudStorage.createSession(
         name: name,
         description: description,
         date: date,
       );
       Navigator.of(context).pop();
+      Navigator.of(context).pop();
     } catch (_) {
+      Navigator.of(context).pop();
       showErrorDialog(
         context: context,
         error: 'An error Ocurred',
@@ -114,7 +124,7 @@ class _CreateNewSessionState extends State<CreateNewSession> {
               OutlinedButton.icon(
                 icon: const Icon(
                   Icons.check,
-                  color: Color(0xFFDDDDDD),
+                  color: Color(0xFF00D0FE),
                 ),
                 label: Text(
                   'Create',

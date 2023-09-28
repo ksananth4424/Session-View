@@ -43,12 +43,22 @@ class _UserReviewScreenState extends State<UserReviewScreen> {
         return;
       }
       final text = _text.text;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
       await _reviewService.giveReview(
         text: text,
         session: widget.session,
       );
       Navigator.of(context).pop();
+      Navigator.of(context).pop();
     } on CouldNotSendReviewException catch (_) {
+      Navigator.of(context).pop();
       await showErrorDialog(
         context: context,
         error: 'Could not send the review',
@@ -129,7 +139,7 @@ class _UserReviewScreenState extends State<UserReviewScreen> {
                           child: OutlinedButton.icon(
                             icon: const Icon(
                               Icons.check,
-                              color: Color(0xFFDDDDDD),
+                              color: Color(0xFF00D0FE),
                             ),
                             label: Text(
                               'Send Review',

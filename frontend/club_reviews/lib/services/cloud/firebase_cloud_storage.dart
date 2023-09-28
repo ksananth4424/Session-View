@@ -77,7 +77,7 @@ class FirebaseCloudStorage {
           .delete();
 
       final uri = Uri.parse(
-        'https://2fb5-103-232-241-235.ngrok-free.app/stop',
+        'https://c8e9-103-232-241-235.ngrok-free.app/stop',
       );
 
       final request = {

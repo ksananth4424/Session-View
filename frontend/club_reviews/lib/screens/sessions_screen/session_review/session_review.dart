@@ -1,4 +1,5 @@
 import 'package:club_reviews/constants/cloud_constants.dart';
+import 'package:club_reviews/screens/sessions_screen/session_review/bar_graph.dart';
 import 'package:club_reviews/services/auth/auth_service.dart';
 import 'package:club_reviews/services/cloud/session.dart';
 import 'package:club_reviews/utilities/custom_appbar.dart';
@@ -52,37 +53,39 @@ class SessionReviews extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 40),
-              buildReviewBar(
-                name: 'Overall Session',
-                field: overallGoodField,
-              ),
-              const SizedBox(height: 40),
-              buildReviewBar(
-                name: 'Management',
-                field: managementField,
-              ),
-              const SizedBox(height: 40),
-              buildReviewBar(
-                name: 'Topic Level',
-                field: topicLevelField,
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              buildReviewBar(
-                name: 'Length of Session',
-                field: lengthField,
-              ),
-              const SizedBox(height: 40),
-              buildReviewBar(
-                name: 'Beginner Friendly',
-                field: beginnerFriendlyField,
-              ),
-              const SizedBox(height: 40),
-              buildReviewBar(
-                name: 'Informative',
-                field: informativeField,
-              ),
+
+              BarGraph(tags: session.tags),
+              // buildReviewBar(
+              //   name: 'Overall Session',
+              //   field: overallGoodField,
+              // ),
+              // const SizedBox(height: 40),
+              // buildReviewBar(
+              //   name: 'Management',
+              //   field: managementField,
+              // ),
+              // const SizedBox(height: 40),
+              // buildReviewBar(
+              //   name: 'Topic Level',
+              //   field: topicLevelField,
+              // ),
+              // const SizedBox(
+              //   height: 40,
+              // ),
+              // buildReviewBar(
+              //   name: 'Length of Session',
+              //   field: lengthField,
+              // ),
+              // const SizedBox(height: 40),
+              // buildReviewBar(
+              //   name: 'Beginner Friendly',
+              //   field: beginnerFriendlyField,
+              // ),
+              // const SizedBox(height: 40),
+              // buildReviewBar(
+              //   name: 'Informative',
+              //   field: informativeField,
+              // ),
             ],
           ),
         ),

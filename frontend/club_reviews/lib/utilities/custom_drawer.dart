@@ -21,8 +21,8 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       width: 250,
-      surfaceTintColor: Color(0xF415151A),
-      backgroundColor: Color(0xF415151A),
+      surfaceTintColor: const Color(0xF415151A),
+      backgroundColor: const Color(0xF415151A),
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -65,10 +65,20 @@ class CustomDrawer extends StatelessWidget {
                 if (!shouldLogout) {
                   return;
                 }
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                );
                 AuthService.firebase().logout();
+                Navigator.of(context).pop();
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil(loginRoute, (_) => false);
               } catch (_) {
+                Navigator.of(context).pop();
                 showErrorDialog(
                     context: context, error: 'Something went wrong');
               }
