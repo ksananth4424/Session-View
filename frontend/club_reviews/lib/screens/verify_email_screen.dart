@@ -21,7 +21,7 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                 height: 500,
                 child: Center(
-                  child: Text('Reviews',
+                  child: Text('Session View',
                       style: Theme.of(context).textTheme.displaySmall),
                 ),
               ),
