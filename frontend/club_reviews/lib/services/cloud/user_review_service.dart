@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:club_reviews/constants/cloud_constants.dart';
 import 'package:club_reviews/services/auth/auth_service.dart';
-import 'package:club_reviews/services/cloud/cloud_storage_exceptions.dart';
 import 'package:club_reviews/services/cloud/session.dart';
+import 'package:club_reviews/services/cloud/user_review_exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:developer' as devtools show log;
@@ -27,6 +27,9 @@ class UserReviewService {
     required Session session,
   }) async {
     try {
+      if (text.isEmpty) {
+        throw CouldNotSendReviewException();
+      }
       final documentRef = await FirebaseFirestore.instance
           .collection(
               'clubs/${session.clubId}/sessions/${session.doucmentId}/reviews')
@@ -36,8 +39,8 @@ class UserReviewService {
         },
       );
 
-      final uri = Uri.parse(
-          'http://10.42.0.173:9000/submit_form');
+      final uri =
+          Uri.parse('https://2fb5-103-232-241-235.ngrok-free.app/submit_form');
 
       final request = {
         clubIdField: session.clubId,
@@ -54,7 +57,7 @@ class UserReviewService {
       devtools.log(response.statusCode.toString());
     } catch (_) {
       devtools.log(_.toString());
-      throw CouldNotGiveReviewException();
+      throw CouldNotSendReviewException();
     }
   }
 }

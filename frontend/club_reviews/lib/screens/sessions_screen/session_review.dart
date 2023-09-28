@@ -38,7 +38,9 @@ class SessionReviews extends StatelessWidget {
             children: [
               Text(
                 session.name,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.headlineSmall?.apply(
+                      color: const Color(0xFF00D0FE),
+                    ),
               ),
               Text(
                 '$clubName • ${session.date}',
@@ -48,6 +50,11 @@ class SessionReviews extends StatelessWidget {
               Text(
                 session.description,
                 style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 40),
+              buildReviewBar(
+                name: 'Overall Session',
+                field: overallGoodField,
               ),
               const SizedBox(height: 40),
               buildReviewBar(
@@ -98,7 +105,10 @@ class SessionReviews extends StatelessWidget {
           backgroundColor: Colors.transparent,
           borderRadius: BorderRadius.circular(5),
           color: const Color(0xFF00D0FE),
-          value: (session.tags[field] == 0 ? 0.0 : session.tags[field]),
+          value:
+              (session.tags[field] == 0 || session.tags[reviewCountField] == 0
+                  ? 0.0
+                  : session.tags[field] / session.tags[reviewCountField]),
         )
       ],
     );

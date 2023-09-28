@@ -76,6 +76,11 @@ class _UpcomingSessionsState extends State<UpcomingSessions> {
                       session: session,
                       navToReview: showReviews,
                       press: getFunc(session),
+                      onDelete: ({required Session session}) {
+                        _cloudStorage.deleteSession(
+                          session: session,
+                        );
+                      },
                     );
                   },
                 ),

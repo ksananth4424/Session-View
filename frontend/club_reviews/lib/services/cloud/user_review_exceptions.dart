@@ -1,0 +1,1 @@
+class CouldNotSendReviewException implements Exception {}

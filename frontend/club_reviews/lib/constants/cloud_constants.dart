@@ -13,3 +13,5 @@ const lengthField = 'length';
 const beginnerFriendlyField = 'beginner_friendly';
 const informativeField = 'informative';
 const topicLevelField = 'topic_level';
+const overallGoodField = 'overall_good';
+const reviewCountField = 'count';
